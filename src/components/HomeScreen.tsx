@@ -1,9 +1,28 @@
-import { FRAMES, SLOT_LABEL } from '../data/frames'
+import { useState } from 'react'
+import { EXTRA_FRAME_DEFS } from '../data/frame-defs'
+import { BASE_FRAMES, FRAMES, SLOT_LABEL, type Frame } from '../data/frames'
 import { FRAME_KANA } from '../data/readings'
 import { countSentences } from '../data/sentences'
 import { LEVELS, LEVEL_IDS, type Level } from '../data/words'
 import { progressKey, type ProgressMap, type Settings } from '../lib/progress'
 import { STAGES, type Stage } from '../lib/stages'
+
+type GroupId = 'base' | 'extra'
+
+const GROUPS: { id: GroupId; label: string; frames: Frame[] }[] = [
+  { id: 'base', label: '元の 10 型', frames: BASE_FRAMES },
+  { id: 'extra', label: '追加 10 型', frames: EXTRA_FRAME_DEFS.map((d) => d.frame) },
+]
+
+const GROUP_KEY = 'etd:frame-group'
+
+function loadGroup(): GroupId {
+  try {
+    return localStorage.getItem(GROUP_KEY) === 'extra' ? 'extra' : 'base'
+  } catch {
+    return 'base'
+  }
+}
 
 interface Props {
   level: Level
@@ -28,8 +47,21 @@ export function HomeScreen({
   onStart,
   onClearProgress,
 }: Props) {
+  const [group, setGroup] = useState<GroupId>(loadGroup)
+  const visible = GROUPS.find((g) => g.id === group)!.frames
   const frame = FRAMES.find((f) => f.id === frameId)!
   const total = FRAMES.reduce((n, f) => n + countSentences(level, f.id), 0)
+
+  const switchGroup = (id: GroupId) => {
+    setGroup(id)
+    try {
+      localStorage.setItem(GROUP_KEY, id)
+    } catch {
+      // ignore
+    }
+    const frames = GROUPS.find((g) => g.id === id)!.frames
+    if (!frames.some((f) => f.id === frameId)) onFrame(frames[0].id)
+  }
   const doneCount = Object.entries(progress).filter(([k, v]) => k.startsWith(`${level}/`) && v.completed > 0).length
 
   return (
@@ -66,9 +98,27 @@ export function HomeScreen({
 
       <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_320px]">
         <section>
-          <h2 className="text-sm font-semibold text-slate-600">型をえらぶ（全 {FRAMES.length} 種）</h2>
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <h2 className="text-sm font-semibold text-slate-600">型をえらぶ（全 {FRAMES.length} 種）</h2>
+            <div className="inline-flex rounded-lg bg-slate-200 p-0.5 text-sm" role="tablist">
+              {GROUPS.map((g) => (
+                <button
+                  key={g.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={group === g.id}
+                  onClick={() => switchGroup(g.id)}
+                  className={`rounded-md px-3 py-1 font-medium transition ${
+                    group === g.id ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-600 hover:text-slate-900'
+                  }`}
+                >
+                  {g.label}
+                </button>
+              ))}
+            </div>
+          </div>
           <ul className="mt-3 grid gap-2 sm:grid-cols-2">
-            {FRAMES.map((f, i) => {
+            {visible.map((f, i) => {
               const selected = f.id === frameId
               const n = countSentences(level, f.id)
               return (
