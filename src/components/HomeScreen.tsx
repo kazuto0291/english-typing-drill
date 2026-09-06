@@ -11,7 +11,7 @@ type GroupId = 'base' | 'extra'
 
 const GROUPS: { id: GroupId; label: string; frames: Frame[] }[] = [
   { id: 'base', label: '元の 10 型', frames: BASE_FRAMES },
-  { id: 'extra', label: '追加 10 型', frames: EXTRA_FRAME_DEFS.map((d) => d.frame) },
+  { id: 'extra', label: `追加 ${EXTRA_FRAME_DEFS.length} 型`, frames: EXTRA_FRAME_DEFS.map((d) => d.frame) },
 ]
 
 const GROUP_KEY = 'etd:frame-group'
