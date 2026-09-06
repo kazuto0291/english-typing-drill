@@ -30,6 +30,7 @@ interface Props {
   onFrame: (id: string) => void
   onSettings: (s: Settings) => void
   onStart: (stage: Stage) => void
+  onDashboard: () => void
   onClearProgress: () => void
 }
 
@@ -42,6 +43,7 @@ export function HomeScreen({
   onFrame,
   onSettings,
   onStart,
+  onDashboard,
   onClearProgress,
 }: Props) {
   const [group, setGroup] = useState<GroupId>(loadGroup)
@@ -91,6 +93,13 @@ export function HomeScreen({
         <p className="text-sm text-slate-500">
           全 {total} 文 ／ 完了 {doneCount} / {FRAMES.length * STAGES.length} ドリル
         </p>
+        <button
+          type="button"
+          onClick={onDashboard}
+          className="rounded-lg border border-indigo-200 bg-indigo-50 px-3 py-1.5 text-sm font-medium text-indigo-700 hover:bg-indigo-100"
+        >
+          学習履歴を見る
+        </button>
       </div>
 
       <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_320px]">

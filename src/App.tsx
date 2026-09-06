@@ -3,6 +3,7 @@ import { FRAMES } from './data/frames'
 import { countSentences } from './data/sentences'
 import type { Level } from './data/words'
 import { DrillScreen } from './components/drills/DrillScreen'
+import { DashboardScreen } from './components/DashboardScreen'
 import { HomeScreen } from './components/HomeScreen'
 import { ResultScreen, type DrillSummary } from './components/ResultScreen'
 import { clearProgress, loadProgress, loadSettings, saveResult, saveSettings, type Settings } from './lib/progress'
@@ -12,6 +13,7 @@ import type { DrillStats } from './lib/useDrillSession'
 
 type View =
   | { kind: 'home' }
+  | { kind: 'dashboard' }
   | { kind: 'drill'; stage: Stage; run: number }
   | { kind: 'result'; summary: DrillSummary }
 
@@ -69,6 +71,10 @@ export default function App() {
     )
   }
 
+  if (view.kind === 'dashboard') {
+    return <DashboardScreen level={level} onLevel={setLevel} onHome={goHome} />
+  }
+
   if (view.kind === 'result') {
     return (
       <ResultScreen
@@ -90,6 +96,7 @@ export default function App() {
       onFrame={setFrameId}
       onSettings={updateSettings}
       onStart={start}
+      onDashboard={() => setView({ kind: 'dashboard' })}
       onClearProgress={() => setProgress(clearProgress())}
     />
   )
