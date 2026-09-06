@@ -3,9 +3,12 @@
 「100単語で1000文 作文マシン」の文を、日本語 → 英語のタイピングで身につける個人用の英作文練習サイト。
 
 - 元サイト: <https://hina-english-417a36.netlify.app/>
-- 初級 / 中級 × 20 の型（元サイトの 10 型 + 追加 10 型）
+- 初級 / 中級 × 37 の型（元サイトの 10 型 + 追加 27 型）。ホームで「元の 10 型 / 追加の型」をタブで切り替え
   - 元サイト: `I wanna ___.` `Can you ___?` `Can I get ___?` `I'm gonna ___.` `Do you wanna ___?` `I have to ___.` `Let's ___.` `How do I ___?` `I think it's ___.` `I'm interested in ___.`
-  - 追加: `I'm ___.` `It's ___.` `Are you ___?` `Do you like ___?` `Do you have ___?` `Where is ___?` `Can I ___?` `Could you ___?` `Let me ___.` `Don't ___.`
+  - 追加（状態・感想）: `I'm ___.` `It's ___.` `Are you ___?` `Is it ___?` `That sounds ___.` `It looks ___.`
+  - 追加（好み・持ち物・場所）: `Do you like ___?` `I like ___.` `Do you have ___?` `Where is ___?` `How about ___?` `Thank you for ___.` `I'm not sure about ___.`
+  - 追加（依頼・許可・提案）: `Can I ___?` `Could you ___?` `Let me ___.` `Don't ___.` `Why don't we ___?` `What time do you ___?`
+  - 追加（希望・必要・気持ち）: `I need to ___.` `I'd like to ___.` `I'm trying to ___.` `I forgot to ___.` `I used to ___.` `I'm glad to ___.` `I'm sorry to ___.` `Have you ever ___?`（過去分詞）
 - 各ドリルは 3 段階でレベルアップ
 
 | Step | 名前 | 内容 |
