@@ -1,8 +1,9 @@
-import { useCallback, useEffect, useMemo } from 'react'
+import { useCallback, useEffect, useMemo, useRef } from 'react'
 import { FRAME_KANA } from '../../data/readings'
 import { getFrame, getSentences } from '../../data/sentences'
 import { LEVELS, type Level } from '../../data/words'
 import { getStage, type Stage } from '../../lib/stages'
+import { recordSentence } from '../../lib/sentenceLog'
 import { speak } from '../../lib/speech'
 import { useDrillSession, type DrillStats } from '../../lib/useDrillSession'
 import { GrammarCard } from '../GrammarCard'
@@ -39,15 +40,37 @@ export function DrillScreen({ level, frameId, stage, shuffle, speech, onExit, on
   }, [onExit])
 
   const current = session.current
+
+  // 今の文でのミス回数（文が変わるたびにリセット）
+  const missesRef = useRef(0)
+  useEffect(() => {
+    missesRef.current = 0
+  }, [current?.id])
+
+  const handleKeystroke = useCallback(
+    (correct: boolean) => {
+      if (!correct) missesRef.current += 1
+      session.recordKeystroke(correct)
+    },
+    [session],
+  )
+
   const handleComplete = useCallback(() => {
-    if (speech && current) speak(current.en)
+    if (current) {
+      // ミスなしで打ち切れたら「クリア」
+      recordSentence(current.id, stage, missesRef.current === 0 ? 'o' : 'x')
+      if (speech) speak(current.en)
+    }
     session.advance()
-  }, [speech, current, session])
+  }, [speech, current, session, stage])
 
   const handleRecallResult = useCallback(
     (v: 'correct' | 'lenient' | 'wrong') => {
       session.recordSentence(v)
-      if (speech && current) speak(current.en)
+      if (current) {
+        recordSentence(current.id, 'recall', v === 'wrong' ? 'x' : 'o')
+        if (speech) speak(current.en)
+      }
     },
     [session, speech, current],
   )
@@ -93,7 +116,7 @@ export function DrillScreen({ level, frameId, stage, shuffle, speech, onExit, on
           <TraceDrill
             key={current.id}
             sentence={current}
-            onKeystroke={session.recordKeystroke}
+            onKeystroke={handleKeystroke}
             onComplete={handleComplete}
           />
         )}
@@ -101,7 +124,7 @@ export function DrillScreen({ level, frameId, stage, shuffle, speech, onExit, on
           <BlankDrill
             key={current.id}
             sentence={current}
-            onKeystroke={session.recordKeystroke}
+            onKeystroke={handleKeystroke}
             onComplete={handleComplete}
           />
         )}
