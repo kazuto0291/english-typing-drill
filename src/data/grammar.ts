@@ -1,3 +1,5 @@
+import { EXTRA_FRAME_DEFS } from './frame-defs'
+
 export interface GrammarNote {
   /** 型の意味・成り立ち */
   meaning: string
@@ -216,4 +218,5 @@ export const GRAMMAR: Record<string, GrammarNote> = {
     ],
     polite: 'I’m very interested in ___.（〜に大変興味があります）',
   },
+  ...Object.fromEntries(EXTRA_FRAME_DEFS.map((d) => [d.frame.id, d.grammar])),
 }

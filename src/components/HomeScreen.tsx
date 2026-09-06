@@ -40,7 +40,7 @@ export function HomeScreen({
           100単語で1000文 <span className="text-indigo-600">タイピング英作文</span>
         </h1>
         <p className="mt-2 text-sm text-slate-500">
-          10 の型 × 100 語の文を、なぞり → 穴埋め → 瞬間英作文の 3 段階でタイピング練習。
+          {FRAMES.length} の型 × 100 語の文を、なぞり → 穴埋め → 瞬間英作文の 3 段階でタイピング練習。
         </p>
       </header>
 

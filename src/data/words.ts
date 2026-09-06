@@ -1,3 +1,4 @@
+import { EXTRA_FRAME_DEFS } from './frame-defs'
 import type { Slot } from './frames'
 
 export type Level = 'beginner' | 'intermediate'
@@ -101,3 +102,10 @@ export const LEVELS: Record<Level, LevelData> = {
 }
 
 export const LEVEL_IDS: Level[] = ['beginner', 'intermediate']
+
+// 追加した型で使える単語を ok リストに合流させる
+for (const def of EXTRA_FRAME_DEFS) {
+  for (const level of LEVEL_IDS) {
+    LEVELS[level].ok[def.frame.id] = def.ok[level]
+  }
+}

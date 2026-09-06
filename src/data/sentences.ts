@@ -1,6 +1,6 @@
 import { FRAMES, type Frame } from './frames'
 import { LEVELS, type Level } from './words'
-import { ARTICLE, JP_TEMPLATE, OBJ_VERBS } from './translations'
+import { ARTICLE_BY_FRAME, JP_TEMPLATE, OBJ_VERBS } from './translations'
 import { sentenceKana, slotKana } from './readings'
 
 export interface Sentence {
@@ -45,7 +45,7 @@ export function getSentences(level: Level, frameId: string): Sentence[] {
     .map(([en, jp, pos], i) => ({ en, jp, pos, n: i + 1 }))
     .filter((w) => w.pos === frame.slot && ok.has(w.en))
     .map((w) => {
-      const article = frame.id === 'canget' ? (ARTICLE[w.en] ?? '') : ''
+      const article = ARTICLE_BY_FRAME[frame.id]?.[w.en] ?? ''
       const objIt = frame.slot === 'verb' && OBJ_VERBS.includes(w.en) ? 'it' : ''
       const slot = [article, w.en, objIt].filter(Boolean).join(' ')
       return {

@@ -1,8 +1,16 @@
+import { EXTRA_FRAME_DEFS } from './frame-defs'
+
 // 冠詞（Can I get ___? のとき単語の前に付く）
 export const ARTICLE: Record<string, string> = {
   coffee: 'a', ticket: 'a', seat: 'a', menu: 'a', receipt: 'a', key: 'a', bag: 'a',
   name: 'your', opinion: 'your',
   schedule: 'the', budget: 'the',
+}
+
+/** 型ごとの冠詞表。型 ID → 単語 → 冠詞 */
+export const ARTICLE_BY_FRAME: Record<string, Record<string, string>> = {
+  canget: ARTICLE,
+  ...Object.fromEntries(EXTRA_FRAME_DEFS.filter((d) => d.articles).map((d) => [d.frame.id, d.articles!])),
 }
 
 // 目的語 it が必要な動詞（動詞型の英文に自動で it を付ける）
@@ -52,4 +60,5 @@ export const JP_TEMPLATE: Record<string, (w: string, en: string) => string> = {
   howdo: (w) => `どうやって ${w}？`,
   think: (w, en) => JP_THINK[en] ?? (w.endsWith('い') ? `${w}と思う` : `${w}だと思う`),
   interested: (w) => `${w}に 興味がある`,
+  ...Object.fromEntries(EXTRA_FRAME_DEFS.map((d) => [d.frame.id, d.jp])),
 }

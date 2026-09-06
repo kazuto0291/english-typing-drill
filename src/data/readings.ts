@@ -1,3 +1,5 @@
+import { EXTRA_FRAME_DEFS } from './frame-defs'
+
 /** 型のカタカナ読み（___ の位置に単語の読みが入る） */
 export const FRAME_KANA: Record<string, string> = {
   wanna: 'アイ ワナ ___',
@@ -10,13 +12,16 @@ export const FRAME_KANA: Record<string, string> = {
   howdo: 'ハウ ドゥ アイ ___？',
   think: 'アイ シンク イッツ ___',
   interested: 'アイム インタレステッド イン ___',
+  ...Object.fromEntries(EXTRA_FRAME_DEFS.map((d) => [d.frame.id, d.kana])),
 }
 
 /** 冠詞・目的語の読み */
 export const EXTRA_KANA: Record<string, string> = {
   a: 'ア',
+  an: 'アン',
   the: 'ザ',
   your: 'ユア',
+  my: 'マイ',
   it: 'イット',
 }
 
