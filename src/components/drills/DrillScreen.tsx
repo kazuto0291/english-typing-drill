@@ -5,6 +5,7 @@ import { LEVELS, type Level } from '../../data/words'
 import { getStage, type Stage } from '../../lib/stages'
 import { speak } from '../../lib/speech'
 import { useDrillSession, type DrillStats } from '../../lib/useDrillSession'
+import { GrammarCard } from '../GrammarCard'
 import { BlankDrill } from './BlankDrill'
 import { RecallDrill } from './RecallDrill'
 import { TraceDrill } from './TraceDrill'
@@ -113,6 +114,8 @@ export function DrillScreen({ level, frameId, stage, shuffle, speech, onExit, on
           />
         )}
       </main>
+
+      <GrammarCard frame={frame} />
     </div>
   )
 }

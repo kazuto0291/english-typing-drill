@@ -3,6 +3,20 @@ import { FRAMES } from './frames'
 import { getSentences } from './sentences'
 import { LEVEL_IDS, LEVELS } from './words'
 import { FRAME_KANA, WORD_KANA } from './readings'
+import { GRAMMAR } from './grammar'
+
+describe('grammar', () => {
+  it('全型に文法解説がある', () => {
+    for (const frame of FRAMES) {
+      const g = GRAMMAR[frame.id]
+      expect(g, frame.id).toBeTruthy()
+      expect(g.meaning.length).toBeGreaterThan(20)
+      expect(g.scenes.length).toBeGreaterThan(0)
+      expect(g.examples.length).toBeGreaterThan(0)
+      expect(g.tips.length).toBeGreaterThan(0)
+    }
+  })
+})
 
 describe('readings', () => {
   it('全単語と全型にカタカナ読みがある', () => {
