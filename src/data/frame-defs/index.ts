@@ -5,9 +5,10 @@ import { areyou } from './areyou'
 import { doyoulike } from './doyoulike'
 import { doyouhave } from './doyouhave'
 import { whereis } from './whereis'
+import { cani } from './cani'
 
 /** 元サイトの 10 型に追加した型（1 型 1 ファイル）。ここに並べた順にホームへ表示される */
-export const EXTRA_FRAME_DEFS: FrameDef[] = [im, its, areyou, doyoulike, doyouhave, whereis]
+export const EXTRA_FRAME_DEFS: FrameDef[] = [im, its, areyou, doyoulike, doyouhave, whereis, cani]
 
 export function findExtraDef(frameId: string): FrameDef | undefined {
   return EXTRA_FRAME_DEFS.find((d) => d.frame.id === frameId)

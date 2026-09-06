@@ -18,6 +18,8 @@ export const OBJ_VERBS = [
   'use', 'do', 'make', 'find', 'open', 'close', 'get', 'say',
   'handle', 'organize', 'cancel', 'confirm', 'arrange', 'discuss', 'describe',
   'develop', 'consider', 'solve', 'avoid', 'achieve', 'compare',
+  // 追加した型で使う
+  'take', 'borrow', 'replace', 'waste', 'mention',
 ]
 
 const JP_WANNA: Record<string, string> = {
