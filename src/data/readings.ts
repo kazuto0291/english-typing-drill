@@ -23,7 +23,11 @@ export const EXTRA_KANA: Record<string, string> = {
   your: 'ユア',
   my: 'マイ',
   it: 'イット',
+  you: 'ユー',
 }
+
+/** 追加した型で使う活用形などの読み（各型の formKana を合流） */
+const FORM_KANA: Record<string, string> = Object.assign({}, ...EXTRA_FRAME_DEFS.map((d) => d.formKana ?? {}))
 
 /** 単語のカタカナ読み（初級・中級 200 語） */
 export const WORD_KANA: Record<string, string> = {
@@ -77,7 +81,7 @@ export const WORD_KANA: Record<string, string> = {
 export function slotKana(slot: string): string {
   return slot
     .split(' ')
-    .map((w) => WORD_KANA[w] ?? EXTRA_KANA[w] ?? w)
+    .map((w) => WORD_KANA[w] ?? EXTRA_KANA[w] ?? FORM_KANA[w] ?? w)
     .join(' ')
 }
 

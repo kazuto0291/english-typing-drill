@@ -16,5 +16,12 @@ export interface FrameDef {
   kana: string
   /** 単語の前に付ける冠詞など（例: coffee → a, seat → my） */
   articles?: Record<string, string>
+  /**
+   * 穴に入れる形を単語ごとに差し替える（例: try → "tried it", meet → "meet you"）。
+   * 指定した単語は自動の it 付与を行わない。
+   */
+  wordForm?: Record<string, string>
+  /** wordForm で使った活用形などのカタカナ読み（例: tried → トライド） */
+  formKana?: Record<string, string>
   grammar: GrammarNote
 }
