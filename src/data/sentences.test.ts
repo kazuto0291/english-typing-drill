@@ -4,6 +4,7 @@ import { getSentences } from './sentences'
 import { LEVEL_IDS, LEVELS } from './words'
 import { FRAME_KANA, WORD_KANA } from './readings'
 import { GRAMMAR } from './grammar'
+import { FRAME_GROUPS, ungroupedExtraFrameIds } from './frame-groups'
 
 describe('wordForm（型ごとの穴の形）', () => {
   it('過去分詞や you 付きの形に差し替わり、読みも対応する', () => {
@@ -19,6 +20,15 @@ describe('wordForm（型ごとの穴の形）', () => {
     expect(glad.find((s) => s.word === 'meet')?.kana).toBe('アイム グラッド トゥ ミート ユー')
 
     expect(getSentences('beginner', 'sorryto').find((s) => s.word === 'tell')?.en).toBe("I'm sorry to tell you.")
+  })
+})
+
+describe('frame-groups', () => {
+  it('追加の型はすべてどれかのグループに 1 回だけ入っている', () => {
+    expect(ungroupedExtraFrameIds()).toEqual([])
+    const ids = FRAME_GROUPS.flatMap((g) => g.frames.map((f) => f.id))
+    expect(new Set(ids).size).toBe(ids.length)
+    expect(ids.length).toBe(FRAMES.length)
   })
 })
 

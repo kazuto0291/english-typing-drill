@@ -1,26 +1,23 @@
 import { useState } from 'react'
-import { EXTRA_FRAME_DEFS } from '../data/frame-defs'
-import { BASE_FRAMES, FRAMES, SLOT_LABEL, type Frame } from '../data/frames'
+import { FRAME_GROUPS } from '../data/frame-groups'
+import { FRAMES, SLOT_LABEL } from '../data/frames'
 import { FRAME_KANA } from '../data/readings'
 import { countSentences } from '../data/sentences'
 import { LEVELS, LEVEL_IDS, type Level } from '../data/words'
 import { progressKey, type ProgressMap, type Settings } from '../lib/progress'
 import { STAGES, type Stage } from '../lib/stages'
 
-type GroupId = 'base' | 'extra'
-
-const GROUPS: { id: GroupId; label: string; frames: Frame[] }[] = [
-  { id: 'base', label: '元の 10 型', frames: BASE_FRAMES },
-  { id: 'extra', label: `追加 ${EXTRA_FRAME_DEFS.length} 型`, frames: EXTRA_FRAME_DEFS.map((d) => d.frame) },
-]
+const GROUPS = FRAME_GROUPS
+type GroupId = string
 
 const GROUP_KEY = 'etd:frame-group'
 
 function loadGroup(): GroupId {
   try {
-    return localStorage.getItem(GROUP_KEY) === 'extra' ? 'extra' : 'base'
+    const saved = localStorage.getItem(GROUP_KEY)
+    return GROUPS.some((g) => g.id === saved) ? saved! : GROUPS[0].id
   } catch {
-    return 'base'
+    return GROUPS[0].id
   }
 }
 
@@ -100,7 +97,7 @@ export function HomeScreen({
         <section>
           <div className="flex flex-wrap items-center justify-between gap-2">
             <h2 className="text-sm font-semibold text-slate-600">型をえらぶ（全 {FRAMES.length} 種）</h2>
-            <div className="inline-flex rounded-lg bg-slate-200 p-0.5 text-sm" role="tablist">
+            <div className="inline-flex flex-wrap rounded-lg bg-slate-200 p-0.5 text-sm" role="tablist">
               {GROUPS.map((g) => (
                 <button
                   key={g.id}
