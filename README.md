@@ -3,7 +3,9 @@
 「100単語で1000文 作文マシン」の文を、日本語 → 英語のタイピングで身につける個人用の英作文練習サイト。
 
 - 元サイト: <https://hina-english-417a36.netlify.app/>
-- 初級 / 中級 × 10 の型（`I wanna ___.` `Can you ___?` など）
+- 初級 / 中級 × 20 の型（元サイトの 10 型 + 追加 10 型）
+  - 元サイト: `I wanna ___.` `Can you ___?` `Can I get ___?` `I'm gonna ___.` `Do you wanna ___?` `I have to ___.` `Let's ___.` `How do I ___?` `I think it's ___.` `I'm interested in ___.`
+  - 追加: `I'm ___.` `It's ___.` `Are you ___?` `Do you like ___?` `Do you have ___?` `Where is ___?` `Can I ___?` `Could you ___?` `Let me ___.` `Don't ___.`
 - 各ドリルは 3 段階でレベルアップ
 
 | Step | 名前 | 内容 |
@@ -49,6 +51,7 @@ npm run build    # dist/ に出力
 ```
 src/
   data/         型・単語・訳・文生成ロジック（元サイトと同じ規則）
+  data/frame-defs/  追加した型（1 型 1 ファイル。index.ts に登録すると全画面に反映）
   lib/          タイピング判定、進捗保存、読み上げ、ドリル進行フック
   components/   ホーム画面、結果画面、各ステージのドリル
 ```
@@ -57,3 +60,4 @@ src/
 
 型（10 種）・単語（各レベル 100 語）・冠詞や `it` の付与規則・日本語訳の規則は元サイトの表示と一致するように再現しています。
 `src/data/words.ts` と `src/data/translations.ts` を編集すれば、文を追加・修正できます。
+型を増やすときは `src/data/frame-defs/` に 1 ファイル作り、`index.ts` の `EXTRA_FRAME_DEFS` に並べます。
