@@ -31,6 +31,10 @@ export function TraceDrill({ sentence, onKeystroke, onComplete }: Props) {
         }`}
       >
         <TypingLine target={sentence.en} typed={typed} ghost active={!done && focused} />
+        <p className="mt-3 text-base sm:text-lg font-sans text-slate-500 tracking-wider">
+          <span className="mr-2 text-xs text-slate-400">読み</span>
+          {sentence.kana}
+        </p>
       </div>
       {!focused && !done && (
         <p className="mt-3 text-sm text-amber-600">クリックして入力を再開（半角英数で入力してください）</p>

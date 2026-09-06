@@ -1,4 +1,5 @@
 import { FRAMES, SLOT_LABEL } from '../data/frames'
+import { FRAME_KANA } from '../data/readings'
 import { countSentences } from '../data/sentences'
 import { LEVELS, LEVEL_IDS, type Level } from '../data/words'
 import { progressKey, type ProgressMap, type Settings } from '../lib/progress'
@@ -86,6 +87,7 @@ export function HomeScreen({
                           {f.tpl}
                         </p>
                         <p className="mt-0.5 text-sm text-slate-500">{f.jp}</p>
+                        <p className="mt-0.5 text-xs text-slate-400 tracking-wider">{FRAME_KANA[f.id]}</p>
                       </div>
                       <span className="shrink-0 rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-500">
                         {SLOT_LABEL[f.slot]} {n} 文

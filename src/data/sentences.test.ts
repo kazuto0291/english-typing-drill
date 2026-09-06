@@ -2,6 +2,35 @@ import { describe, expect, it } from 'vitest'
 import { FRAMES } from './frames'
 import { getSentences } from './sentences'
 import { LEVEL_IDS, LEVELS } from './words'
+import { FRAME_KANA, WORD_KANA } from './readings'
+
+describe('readings', () => {
+  it('全単語と全型にカタカナ読みがある', () => {
+    for (const level of LEVEL_IDS) {
+      for (const [en] of LEVELS[level].words) {
+        expect(WORD_KANA[en], en).toBeTruthy()
+      }
+    }
+    for (const frame of FRAMES) {
+      expect(FRAME_KANA[frame.id], frame.id).toContain('___')
+    }
+  })
+
+  it('文の読みが組み立てられる', () => {
+    const canget = getSentences('beginner', 'canget')
+    expect(canget.find((s) => s.word === 'coffee')?.kana).toBe('キャナイ ゲット ア コーフィ？')
+    expect(canget.find((s) => s.word === 'name')?.slotKana).toBe('ユア ネイム')
+    const howdo = getSentences('beginner', 'howdo')
+    expect(howdo.find((s) => s.word === 'use')?.kana).toBe('ハウ ドゥ アイ ユーズ イット？')
+    for (const level of LEVEL_IDS) {
+      for (const frame of FRAMES) {
+        for (const s of getSentences(level, frame.id)) {
+          expect(s.kana, s.en).not.toMatch(/[a-z_]/i)
+        }
+      }
+    }
+  })
+})
 
 describe('getSentences', () => {
   it('各レベルに 100 語ある', () => {

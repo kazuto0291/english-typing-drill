@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo } from 'react'
+import { FRAME_KANA } from '../../data/readings'
 import { getFrame, getSentences } from '../../data/sentences'
 import { LEVELS, type Level } from '../../data/words'
 import { getStage, type Stage } from '../../lib/stages'
@@ -73,7 +74,10 @@ export function DrillScreen({ level, frameId, stage, shuffle, speech, onExit, on
 
       <div className="mt-6">
         <div className="flex items-baseline justify-between">
-          <p className="font-mono text-lg text-slate-700">{frame.tpl}</p>
+          <p className="font-mono text-lg text-slate-700">
+            {frame.tpl}
+            <span className="ml-3 font-sans text-sm text-slate-400 tracking-wider">{FRAME_KANA[frame.id]}</span>
+          </p>
           <p className="text-sm text-slate-500">
             {session.index + 1} / {session.total}
           </p>

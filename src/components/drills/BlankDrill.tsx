@@ -38,6 +38,10 @@ export function BlankDrill({ sentence, onKeystroke, onComplete }: Props) {
           <TypingLine target={sentence.slot} typed={typed} ghost={hint} active={!done && focused} />
         </span>
         <span className="text-slate-900 whitespace-pre">{sentence.suffix}</span>
+        <p className="mt-3 text-base sm:text-lg font-sans text-slate-500 tracking-wider">
+          <span className="mr-2 text-xs text-slate-400">読み</span>
+          {sentence.kana}
+        </p>
       </div>
       <div className="mt-3 flex items-center gap-4 text-sm">
         {!done && (

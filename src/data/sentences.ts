@@ -1,6 +1,7 @@
 import { FRAMES, type Frame } from './frames'
 import { LEVELS, type Level } from './words'
 import { ARTICLE, JP_TEMPLATE, OBJ_VERBS } from './translations'
+import { sentenceKana, slotKana } from './readings'
 
 export interface Sentence {
   id: string
@@ -21,6 +22,10 @@ export interface Sentence {
   slot: string
   /** 型の後半（例: "?"） */
   suffix: string
+  /** 完成文のカタカナ読み */
+  kana: string
+  /** 穴に入る部分のカタカナ読み */
+  slotKana: string
 }
 
 export function getFrame(frameId: string): Frame {
@@ -55,6 +60,8 @@ export function getSentences(level: Level, frameId: string): Sentence[] {
         prefix,
         slot,
         suffix,
+        kana: sentenceKana(frame.id, slot),
+        slotKana: slotKana(slot),
       }
     })
 }

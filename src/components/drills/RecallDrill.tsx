@@ -104,6 +104,10 @@ export function RecallDrill({ sentence, onResult, onComplete }: Props) {
           </p>
           <div className="rounded-xl bg-white border border-slate-200 px-5 py-4 text-2xl sm:text-3xl">
             <TypingLine target={sentence.en} typed={normalize(typed)} ghost active={false} />
+            <p className="mt-2 text-base sm:text-lg text-slate-500 tracking-wider">
+              <span className="mr-2 text-xs text-slate-400">読み</span>
+              {sentence.kana}
+            </p>
           </div>
           <p className="text-sm text-slate-500">
             <span className="font-mono text-indigo-600">{sentence.word}</span>
