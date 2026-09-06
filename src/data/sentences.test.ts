@@ -5,6 +5,23 @@ import { LEVEL_IDS, LEVELS } from './words'
 import { FRAME_KANA, WORD_KANA } from './readings'
 import { GRAMMAR } from './grammar'
 
+describe('wordForm（型ごとの穴の形）', () => {
+  it('過去分詞や you 付きの形に差し替わり、読みも対応する', () => {
+    const ever = getSentences('beginner', 'haveyouever')
+    expect(ever.find((s) => s.word === 'try')?.en).toBe('Have you ever tried it?')
+    expect(ever.find((s) => s.word === 'eat')?.en).toBe('Have you ever eaten it?')
+    expect(ever.find((s) => s.word === 'read')?.kana).toBe('ハヴ ユー エヴァー レッド イット？')
+    // 他の型では read は リード のまま
+    expect(getSentences('beginner', 'wanna').find((s) => s.word === 'read')?.kana).toBe('アイ ワナ リード')
+
+    const glad = getSentences('beginner', 'gladto')
+    expect(glad.find((s) => s.word === 'meet')?.en).toBe("I'm glad to meet you.")
+    expect(glad.find((s) => s.word === 'meet')?.kana).toBe('アイム グラッド トゥ ミート ユー')
+
+    expect(getSentences('beginner', 'sorryto').find((s) => s.word === 'tell')?.en).toBe("I'm sorry to tell you.")
+  })
+})
+
 describe('grammar', () => {
   it('全型に文法解説がある', () => {
     for (const frame of FRAMES) {
