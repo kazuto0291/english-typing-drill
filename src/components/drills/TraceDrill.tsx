@@ -10,7 +10,7 @@ interface Props {
 
 /** ステージ 1: 薄い英文をなぞる */
 export function TraceDrill({ sentence, onKeystroke, onComplete }: Props) {
-  const { typed, focused, done, inputProps, focus } = useTypedInput({
+  const { typed, focused, done, missed, inputProps, focus } = useTypedInput({
     target: sentence.en,
     onKeystroke,
     onComplete,
@@ -27,7 +27,13 @@ export function TraceDrill({ sentence, onKeystroke, onComplete }: Props) {
       </p>
       <div
         className={`mt-8 rounded-2xl border-2 bg-white px-6 py-6 text-3xl sm:text-4xl transition-colors ${
-          done ? 'border-emerald-400 bg-emerald-50' : focused ? 'border-indigo-300' : 'border-slate-200'
+          done
+            ? 'border-emerald-400 bg-emerald-50'
+            : missed
+              ? 'miss-shake border-rose-400 bg-rose-50'
+              : focused
+                ? 'border-indigo-300'
+                : 'border-slate-200'
         }`}
       >
         <TypingLine target={sentence.en} typed={typed} ghost active={!done && focused} />

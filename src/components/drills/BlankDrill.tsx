@@ -12,7 +12,7 @@ interface Props {
 /** ステージ 2: 型は見せて ___ の部分だけ打つ */
 export function BlankDrill({ sentence, onKeystroke, onComplete }: Props) {
   const [hint, setHint] = useState(false)
-  const { typed, focused, done, inputProps, focus } = useTypedInput({
+  const { typed, focused, done, missed, inputProps, focus } = useTypedInput({
     target: sentence.slot,
     onKeystroke,
     onComplete,
@@ -30,7 +30,13 @@ export function BlankDrill({ sentence, onKeystroke, onComplete }: Props) {
       </p>
       <div
         className={`mt-8 rounded-2xl border-2 bg-white px-6 py-6 font-mono text-3xl sm:text-4xl leading-relaxed transition-colors ${
-          done ? 'border-emerald-400 bg-emerald-50' : focused ? 'border-indigo-300' : 'border-slate-200'
+          done
+            ? 'border-emerald-400 bg-emerald-50'
+            : missed
+              ? 'miss-shake border-rose-400 bg-rose-50'
+              : focused
+                ? 'border-indigo-300'
+                : 'border-slate-200'
         }`}
       >
         <span className="text-slate-900 whitespace-pre">{sentence.prefix}</span>

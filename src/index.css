@@ -31,3 +31,13 @@ body {
 .caret {
   animation: caret-blink 1s step-end infinite;
 }
+
+@keyframes miss-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+.miss-shake {
+  animation: miss-shake 0.2s ease-in-out;
+}
