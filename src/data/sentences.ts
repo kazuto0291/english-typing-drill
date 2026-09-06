@@ -64,7 +64,7 @@ export function getSentences(level: Level, frameId: string): Sentence[] {
         slot,
         suffix,
         kana: sentenceKana(frame.id, slot),
-        slotKana: slotKana(slot),
+        slotKana: slotKana(slot, frame.id),
       }
     })
 }

@@ -26,8 +26,10 @@ export const EXTRA_KANA: Record<string, string> = {
   you: 'ユー',
 }
 
-/** 追加した型で使う活用形などの読み（各型の formKana を合流） */
-const FORM_KANA: Record<string, string> = Object.assign({}, ...EXTRA_FRAME_DEFS.map((d) => d.formKana ?? {}))
+/** 型ごとの活用形の読み（型 ID → 語 → 読み）。同じつづりでも型によって読みが変わる語（read → レッド）に対応 */
+const FORM_KANA_BY_FRAME: Record<string, Record<string, string>> = Object.fromEntries(
+  EXTRA_FRAME_DEFS.filter((d) => d.formKana).map((d) => [d.frame.id, d.formKana!]),
+)
 
 /** 単語のカタカナ読み（初級・中級 200 語） */
 export const WORD_KANA: Record<string, string> = {
@@ -77,15 +79,16 @@ export const WORD_KANA: Record<string, string> = {
   professional: 'プロフェッショナル', reasonable: 'リーズナブル', responsible: 'リスポンスィブル', serious: 'スィリアス',
 }
 
-/** 穴に入る部分（例: "a coffee", "use it"）の読み */
-export function slotKana(slot: string): string {
+/** 穴に入る部分（例: "a coffee", "use it", "tried it"）の読み */
+export function slotKana(slot: string, frameId?: string): string {
+  const form = frameId ? FORM_KANA_BY_FRAME[frameId] : undefined
   return slot
     .split(' ')
-    .map((w) => WORD_KANA[w] ?? EXTRA_KANA[w] ?? FORM_KANA[w] ?? w)
+    .map((w) => form?.[w] ?? WORD_KANA[w] ?? EXTRA_KANA[w] ?? w)
     .join(' ')
 }
 
 /** 完成文の読み */
 export function sentenceKana(frameId: string, slot: string): string {
-  return (FRAME_KANA[frameId] ?? '___').replace('___', slotKana(slot))
+  return (FRAME_KANA[frameId] ?? '___').replace('___', slotKana(slot, frameId))
 }
